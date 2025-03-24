@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>Discord Emoji Downloader</title>
+
+    <meta name="author" content="Tiemen" />
+    <meta name="description" content="Get all emojis from a server in a ZIP file." />
+    <meta name="keywords" content="discord, emoji, emojis, discordapp, discord app, emoji downloader, download emoji" />
+    <meta name="theme-color" content="#7289DA" />
+
+    <meta property="og:title" content="Discord Emoji Downloader" />
+    <meta property="og:description" content="Get all emojis from a server in a ZIP file." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://thatiemsz.github.io/Discord-Emoji-Downloader/" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="./app.css" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="manifest" href="./manifest.json" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="logo-section">
+                <i class="fas fa-smile-beam"></i>
+                <h1>Discord Emoji Downloader</h1>
+            </div>
+            <div class="nav-menu">
+                <a class="nav-item active" data-tab="default">
+                    <i class="fas fa-magic"></i>
+                    <span>Auto Mode</span>
+                </a>
+
+            </div>
+            <div class="sidebar-footer">
+                <a href="../soon.html" target="_blank" class="github-link">
+                    <i class="fab fa-github"></i>
+                    <span>View on GitHub</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="content-header">
+                <div class="header-title">
+                    <h2>Discord Emoji Downloader</h2>
+                    <p>Download server emojis and stickers with style</p>
+                </div>
+            </div>
+
+            <div class="content-body">
+                <div class="ui tab segment active glass-panel" id="default-1" data-tab="default">
+                    <div class="panel-header">
+                        <i class="fas fa-key"></i>
+                        <h3>Authentication</h3>
+                    </div>
+                    
+                    <div class="ui warning message glass-effect">
+                        <div class="message-content">
+                            <i class="fas fa-shield-alt pulse-icon"></i>
+                            <div class="message-text">
+                                <h4>Security Notice</h4>
+                                <p>Your token is only used to authenticate with Discord and fetch server data. No data is stored.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form class="ui inverted form">
+                        <div class="field">
+                            <label>Discord Token <span class="help-icon" onclick="helpModal();"><i class="fas fa-question-circle"></i></span></label>
+                            <div class="ui inverted input token-input">
+                                <input type="password" name="token" id="token" placeholder="Enter your Discord token" autocomplete="new-password" />
+                                <div class="token-visibility">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <button name="continue" id="continue" class="ui button glow-effect">
+                            <i class="fas fa-arrow-right"></i> Continue
+                        </button>
+                    </form>
+                </div>
+
+                <div class="ui tab segment glass-panel" id="default-2" data-tab="default-hide">
+                    <div class="panel-header">
+                        <i class="fas fa-server"></i>
+                        <h3>Select Content</h3>
+                    </div>
+
+                    <form class="ui inverted form">
+                        <div class="field">
+                            <label><i class="fas fa-server"></i> Server Selection</label>
+                            <div class="ui fluid search selection dropdown glass-effect" id="server-select">
+                                <input type="hidden" name="server" />
+                                <i class="dropdown icon"></i>
+                                <div class="default text">Choose a server</div>
+                            </div>
+                        </div>
+
+                        <div class="selection-grid">
+                            <div class="field" id="emojis">
+                                <div class="selection-card">
+                                    <div class="card-header">
+                                        <i class="fas fa-smile"></i>
+                                        <label>Emojis <span class="counter" id="emojicount"></span></label>
+                                    </div>
+                                    <div class="ui fluid multiple search selection dropdown glass-effect" id="emoji-select">
+                                        <input type="hidden" name="emojis" />
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">Choose emojis</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field" id="emojis2">
+                                <div class="selection-card">
+                                    <div class="card-header">
+                                        <i class="fas fa-grin-stars"></i>
+                                        <label>Additional Emojis <span class="counter" id="emojicount2"></span></label>
+                                    </div>
+                                    <div class="ui fluid multiple search selection dropdown glass-effect" id="emoji-select2">
+                                        <input type="hidden" name="emojis2" />
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">Choose more emojis</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field" id="stickers">
+                                <div class="selection-card">
+                                    <div class="card-header">
+                                        <i class="fas fa-sticky-note"></i>
+                                        <label>Stickers <span class="counter" id="stickercount"></span></label>
+                                    </div>
+                                    <div class="ui fluid multiple search selection dropdown glass-effect" id="sticker-select">
+                                        <input type="hidden" name="stickers" />
+                                        <i class="dropdown icon"></i>
+                                        <div class="default text">Choose stickers</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button name="submit" id="submit" class="ui primary button glow-effect">
+                                <i class="fas fa-download"></i> Download Selected
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="ui tab segment glass-panel" id="manual" data-tab="manual">
+                    <div class="panel-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Manual Mode</h3>
+                    </div>
+
+                    <div class="manual-instructions">
+                        <div class="instruction-card">
+                            <i class="fas fa-info-circle"></i>
+                            <p>Make a GET request to <code>https://discord.com/api/v10/guilds/:id</code> with your user token and paste the response below.</p>
+                        </div>
+                    </div>
+
+                    <div class="ui inverted form">
+                        <div class="field">
+                            <label><i class="fas fa-code"></i> Guild Object</label>
+                            <div id="editor" class="code-editor"></div>
+                        </div>
+                        <div class="action-buttons">
+                            <button name="submit" id="submit" class="ui primary button glow-effect">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="messages">
+                    <div class="ui icon message glass-effect" id="loading">
+                        <div class="message-content">
+                            <i class="notched circle loading icon pulse-icon"></i>
+                            <div class="message-text">
+                                <h4 id="loading-header">Processing</h4>
+                                <p id="loading-msg">Fetching your emojis and stickers...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui icon success message glass-effect" id="success">
+                        <div class="message-content">
+                            <i class="check circle icon pulse-icon"></i>
+                            <div class="message-text">
+                                <h4 id="success-header">Success!</h4>
+                                <p id="success-msg">Found <strong id="emoji-count">0</strong> emojis and <strong id="sticker-count">0</strong> stickers ready for download.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui icon error message glass-effect" id="error">
+                        <div class="message-content">
+                            <i class="times circle icon pulse-icon"></i>
+                            <div class="message-text">
+                                <h4 id="error-header">Error</h4>
+                                <p id="error-msg"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-container">
+        <div class="ui basic modal glass-effect">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <i class="fas fa-key pulse-icon"></i>
+                    <h3>How to Get Your Token</h3>
+                </div>
+                
+                <div class="token-instructions">
+                    <ol>
+                        <li>
+                            <i class="fas fa-desktop"></i>
+                            <span>Open Discord in your browser or desktop app</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-code"></i>
+                            <span>Press F12 or Ctrl+Shift+I to open DevTools</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-terminal"></i>
+                            <span>Type "allow pasting" in console if needed</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-paste"></i>
+                            <span>Paste this code:</span>
+                            <div class="code-block">
+                                <code>(webpackChunkdiscord_app.push([[''],{},e=>{m=[];for(let c in e.c)m.push(e.c[c])}]),m).find(m=>m?.exports?.default?.getToken!==void 0).exports.default.getToken()</code>
+                                <button class="copy-button" onclick="copyCode(this)">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            <span>Copy the token from the console output</span>
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="ui green ok inverted button glow-effect">
+                        <i class="checkmark icon"></i> Got it
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="background-effects">
+        <div class="gradient-sphere"></div>
+        <div class="gradient-sphere"></div>
+        <div class="gradient-sphere"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/ace.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.36.2/mode-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.5.0/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script type="module" src="./app.js"></script>
+</body>
+</html>
